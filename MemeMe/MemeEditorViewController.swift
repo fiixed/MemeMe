@@ -1,5 +1,5 @@
 //
-//  ViewController.swift
+//  MemeEditorViewController.swift
 //  MemeMe
 //
 //  Created by Andrew Bell on 3/12/15.
@@ -8,15 +8,23 @@
 
 import UIKit
 
-class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate , UITextFieldDelegate{
+class MemeEditorViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate , UITextFieldDelegate{
     
-    @IBOutlet weak var memImageView: UIImageView!
+    @IBOutlet weak var imageView: UIImageView!
+    
+    @IBOutlet weak var shareButton: UIBarButtonItem!
+    
+    @IBOutlet weak var toolBar: UIToolbar!
+    
+    @IBOutlet weak var topToolBar: UIToolbar!
     @IBOutlet weak var cameraButton: UIBarButtonItem!
     
     @IBOutlet weak var topTextField: UITextField!
     @IBOutlet weak var bottomTextField: UITextField!
     
     var pickerController:UIImagePickerController!
+    
+    var activityViewController:UIActivityViewController?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -36,7 +44,6 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
         self.bottomTextField.defaultTextAttributes = self.textAttributes()
         self.bottomTextField.text = "BOTTOM"
         self.bottomTextField.textAlignment = .Center
-        
         
     }
     
@@ -69,7 +76,7 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
     
     func imagePickerController(picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [NSObject : AnyObject]) {
         if let image = info[UIImagePickerControllerOriginalImage] as? UIImage {
-            self.memImageView.image = image
+            self.imageView.image = image
         }
         
         self.dismissViewControllerAnimated(true, completion: nil)
@@ -134,6 +141,47 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
         return memeTextAttributes
     }
     
+    func save(memedImage: UIImage) {
+        // Create the meme
+        var meme = Meme(topText: topTextField.text!, bottomText: bottomTextField.text!, originalImage: self.imageView.image!, memeImage: memedImage)
+        
+        // Add it to the memes array on the AppDelegate
+        (UIApplication.sharedApplication().delegate as AppDelegate).memes.append(meme)
+    }
+    
+    func generateMemedImage() -> UIImage {
+        
+        // Hide toolbar and navbar
+        self.toolBar.hidden = true
+        self.topToolBar.hidden = true
+        
+        // Render view to an image
+        UIGraphicsBeginImageContext(self.view.frame.size)
+        self.view.drawViewHierarchyInRect(self.view.frame, afterScreenUpdates: true)
+        let memedImage : UIImage = UIGraphicsGetImageFromCurrentImageContext()
+        UIGraphicsEndImageContext()
+        
+        // Unhide toolbar
+        self.toolBar.hidden = false
+        self.topToolBar.hidden = false
+        
+        return memedImage
+    }
+    
+    @IBAction func share(sender: UIBarButtonItem) {
+        
+        let memedImage = self.generateMemedImage()
+        let avc = UIActivityViewController(activityItems: [memedImage] , applicationActivities: nil)
+        
+        avc.completionWithItemsHandler = {
+            (s: String!, ok: Bool, items: [AnyObject]!, err:NSError!) -> Void in
+            self.save(memedImage)
+            
+            self.dismissViewControllerAnimated(true, completion: nil)
+        }
+        
+        presentViewController(avc, animated: true, completion: nil)
+    }
     
     
     

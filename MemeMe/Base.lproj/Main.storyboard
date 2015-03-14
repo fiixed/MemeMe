@@ -5,10 +5,10 @@
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <scenes>
-        <!--View Controller-->
+        <!--Meme Editor View Controller-->
         <scene sceneID="vvD-l3-706">
             <objects>
-                <viewController id="dHj-jm-S1p" customClass="ViewController" customModule="MemeMe" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="dHj-jm-S1p" customClass="MemeEditorViewController" customModule="MemeMe" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="6LL-gE-AkT"/>
                         <viewControllerLayoutGuide type="bottom" id="tdN-Cv-82i"/>
@@ -51,16 +51,6 @@
                                 <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
                                 <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                             </imageView>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="2Kr-2l-dkx" userLabel="Top">
-                                <rect key="frame" x="0.0" y="-30" width="97" height="30"/>
-                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                                <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <textInputTraits key="textInputTraits" autocapitalizationType="allCharacters"/>
-                                <variation key="heightClass=regular-widthClass=compact" misplaced="YES">
-                                    <rect key="frame" x="16" y="50" width="368" height="30"/>
-                                </variation>
-                            </textField>
                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="IQn-XD-YEh" userLabel="Bottom">
                                 <rect key="frame" x="0.0" y="-30" width="97" height="30"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
@@ -71,17 +61,45 @@
                                     <rect key="frame" x="16" y="684" width="368" height="30"/>
                                 </variation>
                             </textField>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="2Kr-2l-dkx" userLabel="Top">
+                                <rect key="frame" x="0.0" y="-30" width="97" height="30"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="allCharacters"/>
+                                <variation key="heightClass=regular-widthClass=compact" misplaced="YES">
+                                    <rect key="frame" x="21" y="104" width="368" height="30"/>
+                                </variation>
+                            </textField>
+                            <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="bzQ-Dd-bk5" userLabel="TopToolbar">
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                                <items>
+                                    <barButtonItem systemItem="action" id="mjp-P7-epa">
+                                        <connections>
+                                            <action selector="share:" destination="dHj-jm-S1p" id="rIP-4G-mxa"/>
+                                        </connections>
+                                    </barButtonItem>
+                                </items>
+                            </toolbar>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="IQn-XD-YEh" firstAttribute="top" secondItem="pV5-XV-PyK" secondAttribute="bottom" constant="-72" id="1O4-Uu-5cB"/>
+                            <constraint firstItem="bzQ-Dd-bk5" firstAttribute="top" secondItem="6LL-gE-AkT" secondAttribute="bottom" id="3Ld-74-0CF"/>
                             <constraint firstItem="bY2-yn-E6Z" firstAttribute="top" secondItem="pV5-XV-PyK" secondAttribute="bottom" id="8KE-Vf-Fj8"/>
                             <constraint firstAttribute="centerX" secondItem="IQn-XD-YEh" secondAttribute="centerX" id="AtH-6h-SYg"/>
                             <constraint firstAttribute="trailingMargin" secondItem="bY2-yn-E6Z" secondAttribute="trailing" constant="-16" id="BdG-s1-uh3"/>
-                            <constraint firstAttribute="centerX" secondItem="2Kr-2l-dkx" secondAttribute="centerX" id="GgK-9N-2kj"/>
-                            <constraint firstItem="pV5-XV-PyK" firstAttribute="top" secondItem="6LL-gE-AkT" secondAttribute="bottom" id="GqZ-tg-ZbE"/>
+                            <constraint firstAttribute="centerX" secondItem="2Kr-2l-dkx" secondAttribute="centerX" id="GgK-9N-2kj">
+                                <variation key="heightClass=regular-widthClass=compact" constant="-5"/>
+                            </constraint>
+                            <constraint firstItem="pV5-XV-PyK" firstAttribute="top" secondItem="6LL-gE-AkT" secondAttribute="bottom" constant="44" id="Iic-Gx-EIL"/>
                             <constraint firstAttribute="trailingMargin" secondItem="pV5-XV-PyK" secondAttribute="trailing" constant="-11" id="MT9-cG-pyS"/>
-                            <constraint firstItem="pV5-XV-PyK" firstAttribute="top" secondItem="2Kr-2l-dkx" secondAttribute="bottom" constant="-60" id="Rlr-nH-PRN"/>
+                            <constraint firstItem="pV5-XV-PyK" firstAttribute="top" secondItem="2Kr-2l-dkx" secondAttribute="bottom" constant="-60" id="Rlr-nH-PRN">
+                                <variation key="heightClass=regular-widthClass=compact" constant="-70"/>
+                            </constraint>
+                            <constraint firstAttribute="trailingMargin" secondItem="bzQ-Dd-bk5" secondAttribute="trailing" constant="-16" id="UzK-i1-lOB"/>
+                            <constraint firstItem="bzQ-Dd-bk5" firstAttribute="leading" secondItem="Myh-FO-52K" secondAttribute="leadingMargin" constant="-16" id="Zus-k8-XxS"/>
+                            <constraint firstItem="bzQ-Dd-bk5" firstAttribute="top" secondItem="6LL-gE-AkT" secondAttribute="bottom" id="b4X-XX-vK9"/>
                             <constraint firstItem="bY2-yn-E6Z" firstAttribute="leading" secondItem="Myh-FO-52K" secondAttribute="leadingMargin" constant="-16" id="fws-z6-XuN"/>
                             <constraint firstItem="tdN-Cv-82i" firstAttribute="top" secondItem="bY2-yn-E6Z" secondAttribute="bottom" id="gbd-KO-1jw"/>
                             <constraint firstItem="pV5-XV-PyK" firstAttribute="leading" secondItem="Myh-FO-52K" secondAttribute="leadingMargin" constant="-11" id="s0Y-ns-ra4"/>
@@ -90,11 +108,16 @@
                             <mask key="subviews">
                                 <exclude reference="bY2-yn-E6Z"/>
                                 <exclude reference="pV5-XV-PyK"/>
-                                <exclude reference="2Kr-2l-dkx"/>
                                 <exclude reference="IQn-XD-YEh"/>
+                                <exclude reference="2Kr-2l-dkx"/>
+                                <exclude reference="bzQ-Dd-bk5"/>
                             </mask>
                             <mask key="constraints">
-                                <exclude reference="GqZ-tg-ZbE"/>
+                                <exclude reference="3Ld-74-0CF"/>
+                                <exclude reference="UzK-i1-lOB"/>
+                                <exclude reference="Zus-k8-XxS"/>
+                                <exclude reference="b4X-XX-vK9"/>
+                                <exclude reference="Iic-Gx-EIL"/>
                                 <exclude reference="MT9-cG-pyS"/>
                                 <exclude reference="Rlr-nH-PRN"/>
                                 <exclude reference="s0Y-ns-ra4"/>
@@ -111,11 +134,16 @@
                             <mask key="subviews">
                                 <include reference="bY2-yn-E6Z"/>
                                 <include reference="pV5-XV-PyK"/>
-                                <include reference="2Kr-2l-dkx"/>
                                 <include reference="IQn-XD-YEh"/>
+                                <include reference="2Kr-2l-dkx"/>
+                                <include reference="bzQ-Dd-bk5"/>
                             </mask>
                             <mask key="constraints">
-                                <include reference="GqZ-tg-ZbE"/>
+                                <include reference="3Ld-74-0CF"/>
+                                <include reference="UzK-i1-lOB"/>
+                                <include reference="Zus-k8-XxS"/>
+                                <include reference="b4X-XX-vK9"/>
+                                <include reference="Iic-Gx-EIL"/>
                                 <include reference="MT9-cG-pyS"/>
                                 <include reference="Rlr-nH-PRN"/>
                                 <include reference="s0Y-ns-ra4"/>
@@ -132,13 +160,16 @@
                     <connections>
                         <outlet property="bottomTextField" destination="IQn-XD-YEh" id="cDe-4X-IJd"/>
                         <outlet property="cameraButton" destination="7KM-Td-mfH" id="hPa-YE-QPr"/>
-                        <outlet property="memImageView" destination="pV5-XV-PyK" id="2qP-lc-DGr"/>
+                        <outlet property="imageView" destination="pV5-XV-PyK" id="LfD-Qj-ri7"/>
+                        <outlet property="shareButton" destination="mjp-P7-epa" id="JEj-Bt-AzJ"/>
+                        <outlet property="toolBar" destination="bY2-yn-E6Z" id="o1j-av-POi"/>
                         <outlet property="topTextField" destination="2Kr-2l-dkx" id="0s1-MQ-aHe"/>
+                        <outlet property="topToolBar" destination="bzQ-Dd-bk5" id="TIc-FL-g6F"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="xut-wh-ipO" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="321" y="354"/>
+            <point key="canvasLocation" x="1239" y="354"/>
         </scene>
     </scenes>
 </document>
