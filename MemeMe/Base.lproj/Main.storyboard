@@ -28,7 +28,7 @@
                                             <action selector="pickCamera:" destination="dHj-jm-S1p" id="PAI-kq-Dg6"/>
                                         </connections>
                                     </barButtonItem>
-                                    <barButtonItem width="78" style="plain" systemItem="fixedSpace" id="XNV-m6-Jjc"/>
+                                    <barButtonItem width="42" style="plain" systemItem="fixedSpace" id="XNV-m6-Jjc"/>
                                     <barButtonItem title="Album" id="lta-Uk-p8q">
                                         <connections>
                                             <action selector="pickAlbum:" destination="dHj-jm-S1p" id="5v3-qi-1KP"/>
@@ -49,14 +49,39 @@
                             </toolbar>
                             <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="pV5-XV-PyK">
                                 <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
+                                <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                             </imageView>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="2Kr-2l-dkx" userLabel="Top">
+                                <rect key="frame" x="0.0" y="-30" width="97" height="30"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="allCharacters"/>
+                                <variation key="heightClass=regular-widthClass=compact" misplaced="YES">
+                                    <rect key="frame" x="16" y="50" width="368" height="30"/>
+                                </variation>
+                            </textField>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="IQn-XD-YEh" userLabel="Bottom">
+                                <rect key="frame" x="0.0" y="-30" width="97" height="30"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="allCharacters"/>
+                                <variation key="heightClass=regular-widthClass=compact" misplaced="YES">
+                                    <rect key="frame" x="16" y="684" width="368" height="30"/>
+                                </variation>
+                            </textField>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
+                            <constraint firstItem="IQn-XD-YEh" firstAttribute="top" secondItem="pV5-XV-PyK" secondAttribute="bottom" constant="-72" id="1O4-Uu-5cB"/>
                             <constraint firstItem="bY2-yn-E6Z" firstAttribute="top" secondItem="pV5-XV-PyK" secondAttribute="bottom" id="8KE-Vf-Fj8"/>
+                            <constraint firstAttribute="centerX" secondItem="IQn-XD-YEh" secondAttribute="centerX" id="AtH-6h-SYg"/>
                             <constraint firstAttribute="trailingMargin" secondItem="bY2-yn-E6Z" secondAttribute="trailing" constant="-16" id="BdG-s1-uh3"/>
+                            <constraint firstAttribute="centerX" secondItem="2Kr-2l-dkx" secondAttribute="centerX" id="GgK-9N-2kj"/>
                             <constraint firstItem="pV5-XV-PyK" firstAttribute="top" secondItem="6LL-gE-AkT" secondAttribute="bottom" id="GqZ-tg-ZbE"/>
                             <constraint firstAttribute="trailingMargin" secondItem="pV5-XV-PyK" secondAttribute="trailing" constant="-11" id="MT9-cG-pyS"/>
+                            <constraint firstItem="pV5-XV-PyK" firstAttribute="top" secondItem="2Kr-2l-dkx" secondAttribute="bottom" constant="-60" id="Rlr-nH-PRN"/>
                             <constraint firstItem="bY2-yn-E6Z" firstAttribute="leading" secondItem="Myh-FO-52K" secondAttribute="leadingMargin" constant="-16" id="fws-z6-XuN"/>
                             <constraint firstItem="tdN-Cv-82i" firstAttribute="top" secondItem="bY2-yn-E6Z" secondAttribute="bottom" id="gbd-KO-1jw"/>
                             <constraint firstItem="pV5-XV-PyK" firstAttribute="leading" secondItem="Myh-FO-52K" secondAttribute="leadingMargin" constant="-11" id="s0Y-ns-ra4"/>
@@ -65,11 +90,17 @@
                             <mask key="subviews">
                                 <exclude reference="bY2-yn-E6Z"/>
                                 <exclude reference="pV5-XV-PyK"/>
+                                <exclude reference="2Kr-2l-dkx"/>
+                                <exclude reference="IQn-XD-YEh"/>
                             </mask>
                             <mask key="constraints">
                                 <exclude reference="GqZ-tg-ZbE"/>
                                 <exclude reference="MT9-cG-pyS"/>
+                                <exclude reference="Rlr-nH-PRN"/>
                                 <exclude reference="s0Y-ns-ra4"/>
+                                <exclude reference="GgK-9N-2kj"/>
+                                <exclude reference="1O4-Uu-5cB"/>
+                                <exclude reference="AtH-6h-SYg"/>
                                 <exclude reference="8KE-Vf-Fj8"/>
                                 <exclude reference="BdG-s1-uh3"/>
                                 <exclude reference="fws-z6-XuN"/>
@@ -80,11 +111,17 @@
                             <mask key="subviews">
                                 <include reference="bY2-yn-E6Z"/>
                                 <include reference="pV5-XV-PyK"/>
+                                <include reference="2Kr-2l-dkx"/>
+                                <include reference="IQn-XD-YEh"/>
                             </mask>
                             <mask key="constraints">
                                 <include reference="GqZ-tg-ZbE"/>
                                 <include reference="MT9-cG-pyS"/>
+                                <include reference="Rlr-nH-PRN"/>
                                 <include reference="s0Y-ns-ra4"/>
+                                <include reference="GgK-9N-2kj"/>
+                                <include reference="1O4-Uu-5cB"/>
+                                <include reference="AtH-6h-SYg"/>
                                 <include reference="8KE-Vf-Fj8"/>
                                 <include reference="BdG-s1-uh3"/>
                                 <include reference="fws-z6-XuN"/>
@@ -93,8 +130,10 @@
                         </variation>
                     </view>
                     <connections>
-                        <outlet property="cameraButton" destination="7KM-Td-mfH" id="Aeb-ek-CH2"/>
+                        <outlet property="bottomTextField" destination="IQn-XD-YEh" id="cDe-4X-IJd"/>
+                        <outlet property="cameraButton" destination="7KM-Td-mfH" id="hPa-YE-QPr"/>
                         <outlet property="memImageView" destination="pV5-XV-PyK" id="2qP-lc-DGr"/>
+                        <outlet property="topTextField" destination="2Kr-2l-dkx" id="0s1-MQ-aHe"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="xut-wh-ipO" userLabel="First Responder" sceneMemberID="firstResponder"/>
