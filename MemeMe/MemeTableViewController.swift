@@ -20,6 +20,8 @@ class MemeTableViewController: UITableViewController {
             action: "loadMemeEditor"
         )
         
+        self.navigationItem.title = "Memes"
+        
         if (UIApplication.sharedApplication().delegate as AppDelegate).memes.count == 0 {
             self.loadMemeEditor()
         }
@@ -58,10 +60,11 @@ class MemeTableViewController: UITableViewController {
         
         let meme = (UIApplication.sharedApplication().delegate as AppDelegate).memes[indexPath.row]
         
-        // Set the name and image
+        // Set the text and image
         cell.textLabel?.text = meme.topText
+        cell.imageView?.image = meme.memeImage
         cell.detailTextLabel?.text = meme.bottomText
-        //        cell.villainImageView?.image = UIImage(named: villain.imageName)
+       
         
         
         return cell
