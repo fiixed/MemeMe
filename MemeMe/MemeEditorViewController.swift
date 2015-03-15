@@ -10,6 +10,8 @@ import UIKit
 
 class MemeEditorViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate , UITextFieldDelegate{
     
+    var memes: [Meme]!
+    
     @IBOutlet weak var imageView: UIImageView!
     
     @IBOutlet weak var shareButton: UIBarButtonItem!
@@ -29,7 +31,8 @@ class MemeEditorViewController: UIViewController, UIImagePickerControllerDelegat
     override func viewDidLoad() {
         super.viewDidLoad()
         
-       
+        let applicationDelegate = (UIApplication.sharedApplication().delegate as AppDelegate)
+        memes = applicationDelegate.memes
         
         self.topTextField.delegate = self
         self.bottomTextField.delegate = self
@@ -44,6 +47,8 @@ class MemeEditorViewController: UIViewController, UIImagePickerControllerDelegat
         self.bottomTextField.defaultTextAttributes = self.textAttributes()
         self.bottomTextField.text = "BOTTOM"
         self.bottomTextField.textAlignment = .Center
+        
+        self.shareButton.enabled = false
         
     }
     
@@ -80,6 +85,7 @@ class MemeEditorViewController: UIViewController, UIImagePickerControllerDelegat
         }
         
         self.dismissViewControllerAnimated(true, completion: nil)
+        self.shareButton.enabled = true
     }
     
     // Dismiss keyboard when the user click on the view (outside the UITextField).
@@ -141,12 +147,16 @@ class MemeEditorViewController: UIViewController, UIImagePickerControllerDelegat
         return memeTextAttributes
     }
     
-    func save(memedImage: UIImage) {
+    func save() -> UIImage {
+        
+        let memedImage = self.generateMemedImage()
         // Create the meme
         var meme = Meme(topText: topTextField.text!, bottomText: bottomTextField.text!, originalImage: self.imageView.image!, memeImage: memedImage)
         
         // Add it to the memes array on the AppDelegate
         (UIApplication.sharedApplication().delegate as AppDelegate).memes.append(meme)
+        println("\((UIApplication.sharedApplication().delegate as AppDelegate).memes.count)")
+        return memedImage
     }
     
     func generateMemedImage() -> UIImage {
@@ -169,20 +179,20 @@ class MemeEditorViewController: UIViewController, UIImagePickerControllerDelegat
     }
     
     @IBAction func share(sender: UIBarButtonItem) {
+        let memedImage = self.save()
         
-        let memedImage = self.generateMemedImage()
         let avc = UIActivityViewController(activityItems: [memedImage] , applicationActivities: nil)
         
         avc.completionWithItemsHandler = {
             (s: String!, ok: Bool, items: [AnyObject]!, err:NSError!) -> Void in
-            self.save(memedImage)
-            
             self.dismissViewControllerAnimated(true, completion: nil)
         }
-        
         presentViewController(avc, animated: true, completion: nil)
     }
     
+    @IBAction func done(sender: UIBarButtonItem) {
+        self.dismissViewControllerAnimated(true, completion: nil)
+    }
     
     
   
