@@ -10,6 +10,8 @@ import UIKit
 
 class MemeTableViewController: UITableViewController {
     
+
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -22,9 +24,9 @@ class MemeTableViewController: UITableViewController {
         
         self.navigationItem.title = "Memes"
         
-        if (UIApplication.sharedApplication().delegate as AppDelegate).memes.count == 0 {
-            self.loadMemeEditor()
-        }
+//        if (UIApplication.sharedApplication().delegate as AppDelegate).memes.count == 0 {
+//            self.loadMemeEditor()
+//        }
         
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
@@ -35,6 +37,7 @@ class MemeTableViewController: UITableViewController {
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
+      
         self.tableView.reloadData()
     }
     
@@ -68,6 +71,12 @@ class MemeTableViewController: UITableViewController {
         
         
         return cell
+    }
+    
+    override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        let detailController = self.storyboard!.instantiateViewControllerWithIdentifier("MemeDetailViewController")! as MemeDetailViewController
+        detailController.meme = (UIApplication.sharedApplication().delegate as AppDelegate).memes[indexPath.row]
+        self.navigationController!.pushViewController(detailController, animated: true)
     }
     
     

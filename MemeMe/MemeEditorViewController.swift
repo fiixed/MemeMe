@@ -185,13 +185,20 @@ class MemeEditorViewController: UIViewController, UIImagePickerControllerDelegat
         
         avc.completionWithItemsHandler = {
             (s: String!, ok: Bool, items: [AnyObject]!, err:NSError!) -> Void in
-            self.dismissViewControllerAnimated(true, completion: nil)
+            self.navToTabBarController()
         }
         presentViewController(avc, animated: true, completion: nil)
     }
     
     @IBAction func done(sender: UIBarButtonItem) {
-        self.dismissViewControllerAnimated(true, completion: nil)
+        self.navToTabBarController()
+    }
+    
+    func navToTabBarController() {
+        var tbc:UITabBarController
+        tbc = self.storyboard?.instantiateViewControllerWithIdentifier("TabBarController") as UITabBarController
+        
+        presentViewController(tbc, animated: true, completion: nil)
     }
     
     

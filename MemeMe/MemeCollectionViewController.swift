@@ -5,10 +5,10 @@
 //  Created by Andrew Bell on 3/14/15.
 //  Copyright (c) 2015 FiixedMobile. All rights reserved.
 //
-
+import Foundation
 import UIKit
 
-class MemeCollectionViewController: UICollectionViewController {
+class MemeCollectionViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource{
     
     
     override func viewDidLoad() {
@@ -21,31 +21,31 @@ class MemeCollectionViewController: UICollectionViewController {
             action: "loadMemeEditor"
         )
         
-        
-        
         self.navigationItem.title = "Memes"
     }
     
-    override func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+    func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return (UIApplication.sharedApplication().delegate as AppDelegate).memes.count
     }
     
-    override func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
+    func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCellWithReuseIdentifier("MemeCollectionViewCell", forIndexPath: indexPath) as MemeCollectionViewCell
         let meme = (UIApplication.sharedApplication().delegate as AppDelegate).memes[indexPath.row]
         
-        // Set the text and image
-        cell.topTextLabel.text = meme.topText
-        cell.bottomTextLabel.text = meme.bottomText
+        // Set the image
         cell.memeImageView.image = meme.memeImage
         
         
         return cell
     }
     
-//    override func collectionView(collectionView: UICollectionView, didDeselectItemAtIndexPath indexPath: NSIndexPath) {
-//        <#code#>
-//    }
+    func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath:NSIndexPath)
+    {
+        let detailController = self.storyboard!.instantiateViewControllerWithIdentifier("MemeDetailViewController")! as MemeDetailViewController
+        detailController.meme = (UIApplication.sharedApplication().delegate as AppDelegate).memes[indexPath.row]
+        self.navigationController!.pushViewController(detailController, animated: true)
+        
+    }
     
     // MARK: - Helper methods
     
@@ -55,5 +55,5 @@ class MemeCollectionViewController: UICollectionViewController {
         
         presentViewController(mevc, animated: true, completion: nil)
     }
-
+    
 }
