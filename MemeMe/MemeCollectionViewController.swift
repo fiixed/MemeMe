@@ -17,6 +17,9 @@ class MemeCollectionViewController: UIViewController, UICollectionViewDelegate, 
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        // Add left button to edit rows
+        self.navigationItem.leftBarButtonItem = self.editButtonItem()
+        
         // Add right button on nav bar to go to MemeEditor
         self.navigationItem.rightBarButtonItem = UIBarButtonItem (
             title: "Add",
@@ -63,6 +66,7 @@ class MemeCollectionViewController: UIViewController, UICollectionViewDelegate, 
         self.navigationController!.pushViewController(detailController, animated: true)
         
     }
+    
     
     // MARK: - Helper methods
     

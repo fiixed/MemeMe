@@ -15,6 +15,9 @@ class MemeTableViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        // Add left button to edit rows
+        self.navigationItem.leftBarButtonItem = self.editButtonItem()
+        
         // Add right button on nav bar to go to MemeEditor
         self.navigationItem.rightBarButtonItem = UIBarButtonItem (
             title: "Add",
@@ -79,6 +82,14 @@ class MemeTableViewController: UITableViewController {
         self.navigationController!.pushViewController(detailController, animated: true)
     }
     
+    // Delete row and meme in the array
+    override func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
+        if editingStyle == UITableViewCellEditingStyle.Delete {
+            (UIApplication.sharedApplication().delegate as AppDelegate).memes.removeAtIndex(indexPath.row)
+            tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: UITableViewRowAnimation.Automatic)
+        }
+    }
+    
     
     // MARK: - Helper methods
     
@@ -88,7 +99,4 @@ class MemeTableViewController: UITableViewController {
         
         presentViewController(mevc, animated: true, completion: nil)
     }
-    
-    
-    
 }
