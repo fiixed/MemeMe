@@ -10,36 +10,32 @@ import UIKit
 
 class MemeEditorViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate , UITextFieldDelegate{
     
-    var memes: [Meme]!
-    
     @IBOutlet weak var imageView: UIImageView!
-    
     @IBOutlet weak var shareButton: UIBarButtonItem!
-    
     @IBOutlet weak var toolBar: UIToolbar!
-    
     @IBOutlet weak var topToolBar: UIToolbar!
     @IBOutlet weak var cameraButton: UIBarButtonItem!
-    
     @IBOutlet weak var topTextField: UITextField!
     @IBOutlet weak var bottomTextField: UITextField!
     
     var pickerController:UIImagePickerController!
-    
     var activityViewController:UIActivityViewController?
+    
+    // MARK: - View Lifecycle methods
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        let applicationDelegate = (UIApplication.sharedApplication().delegate as AppDelegate)
-        memes = applicationDelegate.memes
+        self.pickerController = UIImagePickerController()
         
+        // Set delegates
         self.topTextField.delegate = self
         self.bottomTextField.delegate = self
-        // Do any additional setup after loading the view, typically from a nib.
-        self.pickerController = UIImagePickerController()
         self.pickerController.delegate = self
         
+        
+        
+        // Set textField attributes
         self.topTextField.defaultTextAttributes = self.textAttributes()
         self.topTextField.text = "TOP"
         self.topTextField.textAlignment = .Center
@@ -48,6 +44,7 @@ class MemeEditorViewController: UIViewController, UIImagePickerControllerDelegat
         self.bottomTextField.text = "BOTTOM"
         self.bottomTextField.textAlignment = .Center
         
+        // Share button hidden initially
         self.shareButton.enabled = false
         
     }
@@ -55,8 +52,9 @@ class MemeEditorViewController: UIViewController, UIImagePickerControllerDelegat
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
         
+        // Check to see if device has camera to enable camera button
         if(!UIImagePickerController.isSourceTypeAvailable(UIImagePickerControllerSourceType.Camera)) {
-                cameraButton.enabled = false
+            cameraButton.enabled = false
         }
         
         self.subscribeToKeyboardNotifications()
@@ -68,10 +66,13 @@ class MemeEditorViewController: UIViewController, UIImagePickerControllerDelegat
         self.unsubscribeFromKeyboardNotifications()
     }
     
+    // MARK: - Camera/Album methods
     @IBAction func pickCamera(sender: UIBarButtonItem) {
         
-        self.pickerController.sourceType = UIImagePickerControllerSourceType.Camera
-        self .presentViewController(self.pickerController, animated: true, completion: nil)
+        if UIImagePickerController.isSourceTypeAvailable(UIImagePickerControllerSourceType.Camera) {
+            self.pickerController.sourceType = UIImagePickerControllerSourceType.Camera
+            self .presentViewController(self.pickerController, animated: true, completion: nil)
+        }
     }
     
     @IBAction func pickAlbum(sender: UIBarButtonItem) {
@@ -79,6 +80,7 @@ class MemeEditorViewController: UIViewController, UIImagePickerControllerDelegat
         self.presentViewController(self.pickerController, animated: true, completion: nil)
     }
     
+    // MARK: - UIImagePickerControllerDelegate methods
     func imagePickerController(picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [NSObject : AnyObject]) {
         if let image = info[UIImagePickerControllerOriginalImage] as? UIImage {
             self.imageView.image = image
@@ -119,6 +121,7 @@ class MemeEditorViewController: UIViewController, UIImagePickerControllerDelegat
         self.view.frame.origin.y += getKeyboardHeight(notifcation)
     }
     
+    // Get the height of the keyboard
     func getKeyboardHeight(notification: NSNotification) -> CGFloat {
         let userInfo = notification.userInfo
         let keyboardSize = userInfo![UIKeyboardFrameEndUserInfoKey] as NSValue // of CGRect
@@ -138,11 +141,12 @@ class MemeEditorViewController: UIViewController, UIImagePickerControllerDelegat
     // MARK: - Helper methods
     
     func textAttributes() -> [NSString : AnyObject] {
+        // Create meme font
         let memeTextAttributes = [
             NSStrokeColorAttributeName : UIColor.blackColor(),
             NSForegroundColorAttributeName: UIColor.whiteColor(),
             NSFontAttributeName : UIFont(name: "HelveticaNeue-CondensedBlack", size: 40)!,
-            NSStrokeWidthAttributeName : 0
+            NSStrokeWidthAttributeName : -3.0
         ]
         return memeTextAttributes
     }
@@ -150,12 +154,12 @@ class MemeEditorViewController: UIViewController, UIImagePickerControllerDelegat
     func save() -> UIImage {
         
         let memedImage = self.generateMemedImage()
-        // Create the meme
-        var meme = Meme(topText: topTextField.text!, bottomText: bottomTextField.text!, originalImage: self.imageView.image!, memeImage: memedImage)
+        // Create the meme and generate a UUID string for each meme struct
+        var meme = Meme(uuid: NSUUID().UUIDString, topText: topTextField.text!, bottomText: bottomTextField.text!, originalImage: self.imageView.image!, memeImage: memedImage)
         
         // Add it to the memes array on the AppDelegate
         (UIApplication.sharedApplication().delegate as AppDelegate).memes.append(meme)
-        println("\((UIApplication.sharedApplication().delegate as AppDelegate).memes.count)")
+ 
         return memedImage
     }
     
@@ -178,11 +182,23 @@ class MemeEditorViewController: UIViewController, UIImagePickerControllerDelegat
         return memedImage
     }
     
+    // Navigate the user to the Tab Bar Controller (TableView and CollectionView)
+    func navToTabBarController() {
+        var tbc:UITabBarController
+        tbc = self.storyboard?.instantiateViewControllerWithIdentifier("TabBarController") as UITabBarController
+        
+        presentViewController(tbc, animated: true, completion: nil)
+    }
+    
+    // MARK: - IBAction methods
+    
     @IBAction func share(sender: UIBarButtonItem) {
         let memedImage = self.save()
         
+        // Send memedImage to the ActivityViewController
         let avc = UIActivityViewController(activityItems: [memedImage] , applicationActivities: nil)
         
+        // When finished, go to the tab bar controller
         avc.completionWithItemsHandler = {
             (s: String!, ok: Bool, items: [AnyObject]!, err:NSError!) -> Void in
             self.navToTabBarController()
@@ -193,16 +209,5 @@ class MemeEditorViewController: UIViewController, UIImagePickerControllerDelegat
     @IBAction func done(sender: UIBarButtonItem) {
         self.navToTabBarController()
     }
-    
-    func navToTabBarController() {
-        var tbc:UITabBarController
-        tbc = self.storyboard?.instantiateViewControllerWithIdentifier("TabBarController") as UITabBarController
-        
-        presentViewController(tbc, animated: true, completion: nil)
-    }
-    
-    
-  
-    
 }
 

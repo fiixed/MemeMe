@@ -85,12 +85,12 @@
 		05131E001AB2561C003B53C4 /* MemeMe */ = {
 			isa = PBXGroup;
 			children = (
+				05131E031AB2561C003B53C4 /* AppDelegate.swift */,
 				05131E251AB4B139003B53C4 /* MemeEditorViewController.swift */,
 				05131E291AB4E8A0003B53C4 /* MemeTableViewController.swift */,
 				05131E271AB4DA68003B53C4 /* MemeCollectionViewController.swift */,
 				05131E2B1AB60ECC003B53C4 /* MemeCollectionViewCell.swift */,
 				05131E2D1AB7A81B003B53C4 /* MemeDetailViewController.swift */,
-				05131E031AB2561C003B53C4 /* AppDelegate.swift */,
 				05131E231AB49425003B53C4 /* Meme.swift */,
 				05131E071AB2561C003B53C4 /* Main.storyboard */,
 				05131E0A1AB2561C003B53C4 /* Images.xcassets */,
